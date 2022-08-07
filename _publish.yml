@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: b959d60b-6b93-432b-8f2b-993a1087b908
+      url: 'https://dazzling-otter-815723.netlify.app'
