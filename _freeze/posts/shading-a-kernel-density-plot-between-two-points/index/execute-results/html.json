@@ -1,0 +1,16 @@
+{
+  "hash": "8e4503c00ca26a20ed12513f4b163e45",
+  "result": {
+    "markdown": "---\ntitle: 概率密度函数曲线下加阴影的办法\nauthor: ''\ndate: '2017-12-16'\nslug: 概率密度函数曲线下加阴影的办法\ncategories: []\ntags:\n  - plot\n  - ggplot2\n---\n\n\nstackoverflow 上有个问题是如何在概率密度函数曲线下与X轴上的两点之间加阴影。\n\n主要有三种方法，除了 `base plot` 和 `ggplot2` 外，另外一种是用 `lattice` 包，我对这个包不了解，在这里就不列出来了。\n\n示例用的数据如下：\n\n::: {.cell}\n\n```{.r .cell-code}\nset.seed(1)\ndraws <- rnorm(100)^2\ndens <- density(draws)\nplot(dens)\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\n提主想在第75和第95百分位数之间加上阴影，用 `quantile` 函数可以计算出这两个值。\n\n::: {.cell}\n\n```{.r .cell-code}\nq75 <- quantile(draws, .75)\nq95 <- quantile(draws, .95)\n```\n:::\n\n\n\n## base plot 方法\n\n::: {.cell}\n\n```{.r .cell-code}\nx1 <- min(which(dens$x >= q75))  \nx2 <- max(which(dens$x <  q95))\nplot(dens)\nwith(dens, polygon(x=c(x[c(x1,x1:x2,x2)]), y= c(0, y[x1:x2], 0), col=\"gray\"))\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\n\n## ggplot2 方法\n\n::: {.cell}\n\n```{.r .cell-code}\ndd <- with(dens,data.frame(x,y))\nlibrary(ggplot2)\nqplot(x,y,data=dd,geom=\"line\")+\n  geom_ribbon(data=subset(dd,x>q75 & x<q95),aes(ymax=y),ymin=0,\n              fill=\"red\",colour=NA,alpha=0.5)\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n\n\n参考: [Shading a kernel density plot between two points](https://stackoverflow.com/questions/3494593/shading-a-kernel-density-plot-between-two-points)\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -2,9 +2,9 @@
 title: 概率密度函数曲线下加阴影的办法
 author: ''
 date: '2017-12-16'
-slug: 概率密度函数曲线下加阴影的办法
-categories: []
-tags:
+
+
+
   - plot
   - ggplot2
 ---

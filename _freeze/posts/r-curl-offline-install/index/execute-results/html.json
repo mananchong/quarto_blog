@@ -1,0 +1,14 @@
+{
+  "hash": "0a742b8bc0f4deb9188b611e76bb4f5d",
+  "result": {
+    "markdown": "---\ntitle: R包curl的离线安装\nauthor: 波\ndate: '2017-08-16'\nslug: R包curl的离线安装\ncategories: []\ntags: []\n---\n\n\n在无法上外网的电脑（windows系统）上无法成功安装 'curl' 包。\n\n在 github 上搜索之后，发现安装过程中会去 github 上的 `rwinlib/libcurl` 下载一个为windows平台编译的curl。\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Build against static libraries from rwinlib\nif(!file.exists(\"../windows/libcurl-7.54.1/include/curl/curl.h\")){\n  if(getRversion() < \"3.3.0\") setInternet2()\n  download.file(\"https://github.com/rwinlib/libcurl/archive/v7.54.1.zip\", \"lib.zip\", quiet = TRUE)\n  dir.create(\"../windows\", showWarnings = FALSE)\n  unzip(\"lib.zip\", exdir = \"../windows\")\n  unlink(\"lib.zip\")\n}\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

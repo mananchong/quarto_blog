@@ -1,0 +1,14 @@
+{
+  "hash": "acb6675cf121eae939642319b4090222",
+  "result": {
+    "markdown": "---\ntitle: data.table 中删除列的方法\nauthor: 波\ndate: '2017-09-18'\nslug: data.tablek中删除列的方法\ncategories: []\ntags: []\nfrom_Rmd: yes\n---\n\n\n从 EXCEL 读入到 R 里的数据，经常会存在多余的列。比如下表中的以 `X` 开头的列：\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(data.table)\nkeShi = c(\"内科\", NA, NA, \"外科\", NA, NA, NA, \"儿科\", NA, NA)\nset.seed(123)\nRenCi = sample(100:1000, length(keShi))\nX_1 = rep(\"NA\", length(keShi))\nX_2 = rep(\"NA\", length(keShi))\nmenJiZhen <- data.table(keShi, RenCi, X_1, X_2)\nknitr::kable(menJiZhen)\n```\n\n::: {.cell-output-display}\n|keShi | RenCi|X_1 |X_2 |\n|:-----|-----:|:---|:---|\n|内科  |   514|NA  |NA  |\n|NA    |   562|NA  |NA  |\n|NA    |   278|NA  |NA  |\n|外科  |   625|NA  |NA  |\n|NA    |   294|NA  |NA  |\n|NA    |   917|NA  |NA  |\n|NA    |   217|NA  |NA  |\n|儿科  |   398|NA  |NA  |\n|NA    |   328|NA  |NA  |\n|NA    |   343|NA  |NA  |\n:::\n:::\n\n\n包作者推荐的删除多余列的方式是这样的：\n\n::: {.cell}\n\n```{.r .cell-code}\ncolsToDelete <- c(\"X_1\", \"X_2\")\nmenJiZhen[, (colsToDelete) := NULL]\nknitr::kable(menJiZhen)\n```\n\n::: {.cell-output-display}\n|keShi | RenCi|\n|:-----|-----:|\n|内科  |   514|\n|NA    |   562|\n|NA    |   278|\n|外科  |   625|\n|NA    |   294|\n|NA    |   917|\n|NA    |   217|\n|儿科  |   398|\n|NA    |   328|\n|NA    |   343|\n:::\n:::\n\n参考：[Removing multiple columns from R data.table with parameter for columns to remove](https://stackoverflow.com/questions/24590341/removing-multiple-columns-from-r-data-table-with-parameter-for-columns-to-remove)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
