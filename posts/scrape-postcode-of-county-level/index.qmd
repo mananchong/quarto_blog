@@ -2,6 +2,7 @@
 title: "抓取2016年省市县行政区划数据库"
 author: "波"
 date: '2018-01-22'
+draft: true
 ---
 
 上报某项数据时，需要根据邮政编码来判断省份，于是在网上找了下，虽然不合要求，倒是可以拿来练习网页数据的抓取。
@@ -38,10 +39,10 @@ tail(postCodeLines)
 先提取字段名
 
 ```{r}
-header <- postCodeLines[23:34]
+header <- postCodeLines[9:17]
 headerEn <- stri_extract_first_regex(header, "(?<=`).*(?=`)")
 headerCn <- stri_extract_first_regex(header, "(?<=').*(?=')")
-counties <- postCodeLines[41:(length(postCodeLines)-2)]
+counties <- postCodeLines[30:(length(postCodeLines)-2)]
 counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
 tmpFile <- tempfile(fileext = ".csv")
 writeLines(counties, tmpFile)

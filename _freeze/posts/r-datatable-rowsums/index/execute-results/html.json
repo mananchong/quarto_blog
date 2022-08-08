@@ -1,0 +1,14 @@
+{
+  "hash": "af6aebef921139ac0b453aa02774c057",
+  "result": {
+    "markdown": "---\ntitle: Rdatatable中按行求和\nauthor: 波\ndate: '2017-08-26'\n---\n\n\n在实际工作中会遇到按行求和的情况，如下表所示，知道了门诊人次，急诊人次，想在最右边加一列门急诊合计人次。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(data.table)\nmenJiZhen <- data.table(keShi = c('内科', '外科', '骨科', '妇产科', '儿科', '皮肤科'),\n                        menZhenRenCi = c(555, 666, 777, 888 ,999, 111),\n                        jiZhenRenCi = c(55, 66, 77, 88, 99, NA))\nknitr::kable(menJiZhen)\n```\n\n::: {.cell-output-display}\n|keShi  | menZhenRenCi| jiZhenRenCi|\n|:------|------------:|-----------:|\n|内科   |          555|          55|\n|外科   |          666|          66|\n|骨科   |          777|          77|\n|妇产科 |          888|          88|\n|儿科   |          999|          99|\n|皮肤科 |          111|          NA|\n:::\n:::\n\n\n## 采用`rowSums`函数\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmethods01 <- copy(menJiZhen)\nmethods01[, heJi := rowSums(.SD, na.rm = TRUE), .SDcols = c('menZhenRenCi', 'jiZhenRenCi')]\nknitr::kable(methods01)\n```\n\n::: {.cell-output-display}\n|keShi  | menZhenRenCi| jiZhenRenCi| heJi|\n|:------|------------:|-----------:|----:|\n|内科   |          555|          55|  610|\n|外科   |          666|          66|  732|\n|骨科   |          777|          77|  854|\n|妇产科 |          888|          88|  976|\n|儿科   |          999|          99| 1098|\n|皮肤科 |          111|          NA|  111|\n:::\n:::\n\n\n如果要计算的列中包含空值，可以通过设置 `rowSums` 函数的 `na.rm = TRUE` 参数来排除空值。示例中，皮肤科没有急诊，默认情况下（ `na.rm = FALSE` ），计算结果是 `NA`，不是希望的结果。\n\n## 采用 `Reduce` 和 `+` 函数\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmethods02 <- copy(menJiZhen)\nsumCols <- c('menZhenRenCi', 'jiZhenRenCi')\nfor(col in sumCols) set(methods02, i = which(is.na(methods02[[col]])), j = col, 0L)\nmethods02[, heJi := Reduce(`+`, .SD), .SDcols = sumCols]\nknitr::kable(methods02)\n```\n\n::: {.cell-output-display}\n|keShi  | menZhenRenCi| jiZhenRenCi| heJi|\n|:------|------------:|-----------:|----:|\n|内科   |          555|          55|  610|\n|外科   |          666|          66|  732|\n|骨科   |          777|          77|  854|\n|妇产科 |          888|          88|  976|\n|儿科   |          999|          99| 1098|\n|皮肤科 |          111|           0|  111|\n:::\n:::\n\n\n这种方法里，也是首先把空值替换成 0 ， 再用 `Reduce` 和 `+` 函数来求和。\n\n两种方法里，第一种得到的合计列，是 `double` 类型的，而第二种方法里是 `integer` 类型的。\n\n参考：[Sum of integer columns is double](https://stackoverflow.com/questions/45960913/sum-of-integer-columns-is-double/45961107#45961107)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

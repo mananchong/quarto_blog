@@ -1,0 +1,14 @@
+{
+  "hash": "cf341834a14ae4fcbcd4d7135fe8532f",
+  "result": {
+    "markdown": "---\ntitle: datatable中空值的填充\nauthor: 波\ndate: '2017-09-17'\n---\n\n\n从 EXCEL 读入到 R 里的数据，经常会存在空值。比较常见的情况如下所示\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(data.table)\nke_shi = c(\"内科\", NA, NA, \"外科\", NA, NA, NA, \"儿科\", NA, NA)\nset.seed(123)\nmen_zhen_ren_ci = sample(100:1000, length(ke_shi))\nji_zhen_ren_ci = sample(100:1000, length(ke_shi))\nmen_ji_zhen <- data.table(ke_shi, men_zhen_ren_ci, ji_zhen_ren_ci)\nknitr::kable(men_ji_zhen)\n```\n\n::: {.cell-output-display}\n|ke_shi | men_zhen_ren_ci| ji_zhen_ren_ci|\n|:------|---------------:|--------------:|\n|内科   |             514|            113|\n|NA     |             562|            473|\n|NA     |             278|            764|\n|外科   |             625|            701|\n|NA     |             294|            702|\n|NA     |             917|            867|\n|NA     |             217|            808|\n|儿科   |             398|            190|\n|NA     |             328|            447|\n|NA     |             343|            748|\n:::\n:::\n\n\n## NA替换为 0\n\n## 开发版中新增了相关的函数\n\n## `na.locf`\n\n## `base R`\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
