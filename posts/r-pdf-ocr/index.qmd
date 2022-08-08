@@ -2,14 +2,10 @@
 title: 扫描pdf的中文OCR
 author: 波
 date: '2017-08-18'
-
-
-
 ---
 
 GraphicsMagick可以把多页的pdf转换成图片，再用tesseract识别中文。
+
 ```{r eval = FALSE}
 gm.exe convert input.pdf +adjoin output%02d.jpg
 ```
-
- 

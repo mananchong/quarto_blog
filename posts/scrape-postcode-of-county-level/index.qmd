@@ -2,9 +2,6 @@
 title: "抓取2016年省市县行政区划数据库"
 author: "波"
 date: '2018-01-22'
-
-
-
 ---
 
 上报某项数据时，需要根据邮政编码来判断省份，于是在网上找了下，虽然不合要求，倒是可以拿来练习网页数据的抓取。
@@ -51,4 +48,3 @@ writeLines(counties, tmpFile)
 ans <- fread(tmpFile, sep=",", quote="\'", col.names=headerEn)
 knitr::kable(head(ans))
 ```
-

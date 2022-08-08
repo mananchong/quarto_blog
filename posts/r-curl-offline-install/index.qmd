@@ -2,9 +2,6 @@
 title: R包curl的离线安装
 author: 波
 date: '2017-08-16'
-
-
-
 ---
 
 在无法上外网的电脑（windows系统）上无法成功安装 'curl' 包。

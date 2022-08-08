@@ -2,10 +2,6 @@
 title: datatable中空值的填充
 author: 波
 date: '2017-09-17'
-
-
-
-from_Rmd: yes
 ---
 
 从 EXCEL 读入到 R 里的数据，经常会存在空值。比较常见的情况如下所示
