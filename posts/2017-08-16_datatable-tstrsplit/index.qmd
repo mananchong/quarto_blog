@@ -52,7 +52,6 @@ knitr::kable(dtAge)
 
 ```{r}
 #| tidy=TRUE
-#| tidy.opts=list(width.cutoff=60)
 library(data.table)
 dtCT <- data.table(
     buWei = c("胸部,颈部", "腹部,腰椎,颈部", "关节,胸部", "颅脑"),

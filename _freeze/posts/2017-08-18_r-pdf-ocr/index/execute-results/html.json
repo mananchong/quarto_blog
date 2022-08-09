@@ -1,0 +1,14 @@
+{
+  "hash": "9fb24d4140e2f22f748e78a9f4365d6a",
+  "result": {
+    "markdown": "---\ntitle: 扫描pdf的中文OCR\ndate: \"2017-08-18\"\ncategories:\n  - rstats\n  - pdf\n  - ocr\n  - code\n---\n\n\nGraphicsMagick可以把多页的pdf转换成图片，再用tesseract识别中文。\n\n\n::: {.cell}\n\n```{.r .cell-code}\ngm.exe convert input.pdf +adjoin output%02d.jpg\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
