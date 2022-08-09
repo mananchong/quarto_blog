@@ -1,5 +1,5 @@
 ---
-title: "马南冲"
+title: "必见辽阔之地"
 listing:
   contents: posts
   sort: "date desc"
