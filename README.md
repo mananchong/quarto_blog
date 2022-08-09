@@ -1,3 +1,3 @@
 # quarto_blog
 
-[](https://manjis.netlify.app)
+[Netlify](https://manjis.netlify.app)
