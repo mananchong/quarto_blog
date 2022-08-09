@@ -1,7 +1,10 @@
 ---
 title: Rdatatable中tstrsplit的用法
-author: 波
-date: '2017-08-16'
+date: "2017-08-16"
+categories:
+  - rstats
+  - rdatatable
+  - code
 ---
 
 [data.table](http://rdatatable.com) 包中的 `tstrsplit` 函数可以用来把 data.frame 中的一列拆分成两列或多列。
@@ -15,22 +18,27 @@ date: '2017-08-16'
 ```{r}
 library(data.table)
 library(kableExtra)
-dtAge <- data.table(name = c('张三', '李四', '王五'),
-                 age = c('15Y', '10M', '23D'))
-kable_styling(knitr::kable(dtAge,'html'), bootstrap_options = c("striped", "hover"))
+dtAge <- data.table(
+    name = c("张三", "李四", "王五"),
+    age = c("15Y", "10M", "23D")
+)
+kable_styling(
+    knitr::kable(dtAge, "html"),
+    bootstrap_options = c("striped", "hover")
+)
 ```
 
 然后用 `gsub` 把数值和单位之间加上 `@` 符号：
 
 ```{r}
-dtAge[, ageNew := gsub('(\\d+)', '\\1@', age)]
+dtAge[, ageNew := gsub("(\\d+)", "\\1@", age)]
 knitr::kable(dtAge)
 ```
 
 最后按照 `@` 拆分即可：
 
 ```{r}
-dtAge[, c('ageValue', 'ageUnit') := tstrsplit(ageNew, '@')]
+dtAge[, c("ageValue", "ageUnit") := tstrsplit(ageNew, "@")]
 knitr::kable(dtAge)
 ```
 
@@ -42,51 +50,70 @@ knitr::kable(dtAge)
 
 [^1]: 不一定符合临床实际情况；
 
-```{r, tidy=TRUE,tidy.opts=list(width.cutoff=60)}
-        library(data.table)
-        dtCT <- data.table(buWei = c('胸部,颈部', '腹部,腰椎,颈部', '关节,胸部', '颅脑'),
-                 fangShi = c('平扫', '平扫', '增强', '增强'),
-                 renCi = c(11, 22, 33, 44))
-        knitr::kable(dtCT)
+```{r}
+#| tidy=TRUE
+#| tidy.opts=list(width.cutoff=60)
+library(data.table)
+dtCT <- data.table(
+    buWei = c("胸部,颈部", "腹部,腰椎,颈部", "关节,胸部", "颅脑"),
+    fangShi = c("平扫", "平扫", "增强", "增强"),
+    renCi = c(11, 22, 33, 44)
+)
+knitr::kable(dtCT)
 ```
 
 2.  计算出最多需要拆成几列：
 
 ```{r}
-    maxCol <- max(sapply(strsplit(dtCT$buWei,','),length))
-    maxCol
+maxCol <- max(sapply(strsplit(dtCT$buWei, ","), length))
+maxCol
 ```
 
 3.  拆成 `r maxCol` 列：
 
 ```{r}
-    dtCT[, paste0('buWei_', 1:maxCol) := tstrsplit(buWei, ',')][, buWei := NULL]
-    knitr::kable(dtCT)
+dtCT[
+    ,
+    paste0("buWei_", 1:maxCol) := tstrsplit(buWei, ",")
+][
+    ,
+    buWei := NULL
+]
+knitr::kable(dtCT)
 ```
 
 4.  用 `melt` 函数将部位转成一列：
 
 ```{r}
-    ans01 <- melt(dtCT, id.vars = c('fangShi', 'renCi'))[!is.na(value)]
-    ans01[, variable := NULL]
-    setnames(ans01, 'value', 'newBuWei')
-    setcolorder(ans01, c('newBuWei', 'fangShi', 'renCi'))
-    knitr::kable(ans01)
+ans01 <- melt(
+    dtCT,
+    id.vars = c("fangShi", "renCi")
+)[!is.na(value)]
+ans01[, variable := NULL]
+setnames(ans01, "value", "newBuWei")
+setcolorder(ans01, c("newBuWei", "fangShi", "renCi"))
+knitr::kable(ans01)
 ```
 
 5.  按拆分后的部位和扫描方式汇总：
 
 ```{r}
-    ans02 <- ans01[, .(heJi = sum(renCi)), keyby = .(newBuWei, fangShi)]
-    knitr::kable(ans02)
+ans02 <- ans01[
+    ,
+    .(heJi = sum(renCi)),
+    keyby = .(newBuWei, fangShi)
+]
+knitr::kable(ans02)
 ```
 
 上面 2, 3 两步，可以用 `splitstackshape` 包中的 `cSplit` 来实现，只需一步：
 
 ```{r}
 library(splitstackshape)
-dtCT <- data.table(buWei = c('胸部,颈部', '腹部,腰椎,颈部', '关节,胸部', '颅脑'),
-                 fangShi = c('平扫', '平扫', '增强', '增强'),
-                 renCi = c(11, 22, 33, 44))
-knitr::kable(cSplit(dtCT, 'buWei', ','))
+dtCT <- data.table(
+    buWei = c("胸部,颈部", "腹部,腰椎,颈部", "关节,胸部", "颅脑"),
+    fangShi = c("平扫", "平扫", "增强", "增强"),
+    renCi = c(11, 22, 33, 44)
+)
+knitr::kable(cSplit(dtCT, "buWei", ","))
 ```

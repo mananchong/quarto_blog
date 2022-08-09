@@ -1,8 +1,11 @@
 ---
 title: "抓取2016年省市县行政区划数据库"
-author: "mananchong"
-date: '2018-01-22'
-draft: true
+date: "2018-01-22"
+categories:
+  - code
+  - rstats
+  - webscrape
+  - rdatatable
 ---
 
 上报某项数据时，需要根据邮政编码来判断省份，于是在网上找了下，虽然不合要求，倒是可以拿来练习网页数据的抓取。
@@ -14,14 +17,14 @@ library(data.table)
 ```
 
 ```{r}
-doc <- read_html('http://www.cnblogs.com/jiqing9006/p/5849874.html')
+doc <- read_html("http://www.cnblogs.com/jiqing9006/p/5849874.html")
 head(doc)
 ```
 
 在浏览器的开发者工具里查看之后，发现需要的内容都在`<code>`这个`CSS`标签里，这样就可以取出需要的文本。
 
 ```{r}
-postCode <- html_node(doc, css = 'code')
+postCode <- html_node(doc, css = "code")
 postCode <- html_text(postCode)
 ```
 
@@ -34,7 +37,7 @@ head(postCodeLines, n = 40)
 tail(postCodeLines)
 ```
 
-从上面的输出可以看到，第23到34行可以提取出字段的英文名和中文名，第41到倒数第2行是各个县区的具体内容。
+从上面的输出可以看到，第 9 到 17 行可以提取出字段的英文名和中文名，第 30 到倒数第 2 行是各个县区的具体内容。
 
 先提取字段名
 
@@ -42,10 +45,15 @@ tail(postCodeLines)
 header <- postCodeLines[9:17]
 headerEn <- stri_extract_first_regex(header, "(?<=`).*(?=`)")
 headerCn <- stri_extract_first_regex(header, "(?<=').*(?=')")
-counties <- postCodeLines[30:(length(postCodeLines)-2)]
+counties <- postCodeLines[30:(length(postCodeLines) - 2)]
 counties <- stri_extract_first_regex(counties, "(?<=\\().*(?=\\))")
 tmpFile <- tempfile(fileext = ".csv")
 writeLines(counties, tmpFile)
-ans <- fread(tmpFile, sep=",", quote="\'", col.names=headerEn)
+ans <- fread(
+    tmpFile,
+    sep = ",",
+    quote = "\'",
+    col.names = headerEn
+)
 knitr::kable(head(ans))
 ```

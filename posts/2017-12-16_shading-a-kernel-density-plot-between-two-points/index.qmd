@@ -1,7 +1,10 @@
 ---
 title: 概率密度函数曲线下加阴影的办法
-author: '波'
-date: '2017-12-16'
+date: "2017-12-16"
+categories:
+  - plot
+  - code
+  - rstats
 ---
 
 stackoverflow 上有个问题是如何在概率密度函数曲线下与X轴上的两点之间加阴影。
@@ -27,20 +30,26 @@ q95 <- quantile(draws, .95)
 ## base plot 方法
 
 ```{r}
-x1 <- min(which(dens$x >= q75))  
-x2 <- max(which(dens$x <  q95))
+x1 <- min(which(dens$x >= q75))
+x2 <- max(which(dens$x < q95))
 plot(dens)
-with(dens, polygon(x=c(x[c(x1,x1:x2,x2)]), y= c(0, y[x1:x2], 0), col="gray"))
+with(dens, polygon(x = c(x[c(x1, x1:x2, x2)]), y = c(0, y[x1:x2], 0), col = "gray"))
 ```
 
 ## ggplot2 方法
 
 ```{r}
-dd <- with(dens,data.frame(x,y))
+dd <- with(dens, data.frame(x, y))
 library(ggplot2)
-qplot(x,y,data=dd,geom="line")+
-  geom_ribbon(data=subset(dd,x>q75 & x<q95),aes(ymax=y),ymin=0,
-              fill="red",colour=NA,alpha=0.5)
+qplot(x, y, data = dd, geom = "line") +
+    geom_ribbon(
+        data = subset(dd, x > q75 & x < q95),
+        aes(ymax = y),
+        ymin = 0,
+        fill = "red",
+        colour = NA,
+        alpha = 0.5
+    )
 ```
 
 参考: [Shading a kernel density plot between two points](https://stackoverflow.com/questions/3494593/shading-a-kernel-density-plot-between-two-points)
