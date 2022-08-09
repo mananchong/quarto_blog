@@ -1,6 +1,7 @@
 ---
 title: notebook
 author: bo
+draft: true
 ---
 
 ()[https://stackoverflow.com/questions/12258399/how-do-i-create-a-folder-in-a-github-repository]
