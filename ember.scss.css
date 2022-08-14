@@ -17,4 +17,4 @@ p {
   font-family: $font-family-sans-serif;
 }
 
-@import url(//unpkg.com/heti/umd/heti.min.css);
+@import url(https://unpkg.com/heti/umd/heti.min.css);
