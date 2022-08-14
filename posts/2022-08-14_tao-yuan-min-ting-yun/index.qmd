@@ -1,5 +1,5 @@
 ---
-title: "停云"
+title: "停云（陶渊明）"
 date: "2022-08-14"
 categories:
   - poems
@@ -8,6 +8,8 @@ categories:
 
 ## 停雲
 作者：陶淵明　晉
+
+from [wikisource](https://zh.m.wikisource.org/zh-hant/%E5%81%9C%E9%9B%B2)
 
 停雲，思親友也。罇湛新醪，園列初榮，願言不從，歎息彌襟。
 
