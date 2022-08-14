@@ -1,0 +1,14 @@
+{
+  "hash": "4f2b3a49933f3f810e92cba25d28a656",
+  "result": {
+    "markdown": "---\ntitle: \"必见辽阔之地\"\nlisting:\n  contents: posts\n  sort: \"date desc\"\n  type: default\n  categories: true\n  sort-ui: false\n  filter-ui: false\n  feed: true\npage-layout: full\ntitle-block-banner: true\n---\n\n::: {.cell}\n\n```{.r .cell-code}\n# list names of post folders\nposts <- list.dirs(\n  path = here::here(\"posts\"),\n  full.names = FALSE,\n  recursive = FALSE\n)\n\n# extract the slugs\nslugs <- gsub(\"^.*_\", \"\", posts)\n\n# lines to insert to a netlify _redirect file\nredirects <- paste0(\"/\", slugs, \" \", \"/posts/\", posts)\n\n# write the _redirect file\nwriteLines(redirects, here::here(\"_site\", \"_redirects\"))\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
