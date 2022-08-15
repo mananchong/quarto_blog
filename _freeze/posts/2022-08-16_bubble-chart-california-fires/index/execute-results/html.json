@@ -1,0 +1,16 @@
+{
+  "hash": "41cb4dce9fea680ffba538517c849aa7",
+  "result": {
+    "markdown": "---\ntitle: \"Bubble chart: California fires\"\ndate: \"2022-08-16\"\ncategories:\n  -- baser\n  -- code\n---\n\n\nfrom [basegraphics](https://poisonalien.github.io/basegraphics/baseplots.html)\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# download.file(url = \"https://raw.githubusercontent.com/BuzzFeedNews/2018-07-wildfire-trends/master/data/calfire_frap.csv\", destfile = \"09-calfire_frap.csv\")\ndata <- read.delim(file = \"09-calfire_frap.csv\", sep = \",\")\n\ndate_lvls <- seq.Date(\n    as.Date(\"1950/01/01\"),\n    as.Date(\"2017/12/31\"),\n    1\n)\nmd <- names(table(substr(date_lvls, 6, 10)))\n\ndata$reporting_date <- factor(data$alarm_date, levels = as.character.Date(date_lvls), ordered = TRUE)\ndata$reporting_date <- as.Date(data$reporting_date)\ndata <- data[order(data$reporting_date), ]\ndata$md <- substr(x = data$reporting_date, 6, 10)\ndata$md <- factor(x = data$md, levels = md, ordered = TRUE)\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\npar(\n    mar = c(1, 3, 3, 1),\n    family = \"mono\"\n)\nplot(\n    NA,\n    pch = NA,\n    axes = FALSE,\n    ylim = c(1950, 2017),\n    xlim = c(1, 366)\n)\nabline(\n    h = 1950:2017,\n    v = c(0, cumsum(table(substr(md, 1, 2)))),\n    col = \"gray90\"\n)\nabline(\n    h = seq(1950, 2010, 10),\n    col = adjustcolor(\"#34495e\", 0.5),\n    lwd = 1\n)\nsymb_cols <- adjustcolor(\n    col = \"#e74c3c\",\n    alpha.f = 0.6\n)\nsymbols(\n    x = data$md,\n    y = data$year_,\n    add = TRUE,\n    circles = sqrt(data$gis_acres / pi),\n    inches = 0.12,\n    bty = \"n\",\n    pch = 19,\n    bg = symb_cols,\n    fg = symb_cols\n)\naxis(\n    side = 1,\n    at = cumsum(table(substr(md, 1, 2))),\n    labels = month.abb,\n    tick = FALSE,\n    col.axis = \"#34495e\",\n    line = -1.2,\n    cex.axis = 0.7\n)\naxis(\n    side = 2,\n    at = seq(1950, 2010, 10),\n    las = 2,\n    tick = FALSE,\n    line = -1,\n    col.axis = \"#34495e\"\n)\n\ntitle(\n    \"Big fires have gotten more common in California\",\n    adj = 0,\n    line = 2,\n    family = \"Helvetica\",\n    col.main = \"#2C3A47\"\n)\ntitle(\n    \"Each fire is a dot that is scaled by the area that ultimately burned, centered on the date on which\\nthe alarm was sounded\",\n    adj = 0,\n    line = 0,\n    font.main = 1,\n    cex.main = 0.8,\n    family = \"Helvetica\",\n    col.main = \"#2C3A47\"\n)\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/plot-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
