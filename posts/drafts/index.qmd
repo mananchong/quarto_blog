@@ -4,4 +4,4 @@ author: bo
 draft: true
 ---
 
-()[https://stackoverflow.com/questions/12258399/how-do-i-create-a-folder-in-a-github-repository]
+[how-do-i-create-a-folder-in-a-github-repository](https://stackoverflow.com/questions/12258399/how-do-i-create-a-folder-in-a-github-repository)

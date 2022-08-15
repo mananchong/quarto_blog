@@ -1,0 +1,15 @@
+---
+title: "awesom r packaegs"
+date: "2022-08-16"
+categories:
+  - R
+  - collections
+---
+
+| name       | link | description |
+|------------|------|-------------|
+| data.table |      |             |
+| base r     |      |             |
+|            |      |             |
+
+: Awesom R Packages
