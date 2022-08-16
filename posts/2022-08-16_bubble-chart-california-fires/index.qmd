@@ -2,7 +2,7 @@
 title: "Bubble chart: California fires"
 date: "2022-08-16"
 categories:
-  - baser
+  - baseR
   - code
 ---
 

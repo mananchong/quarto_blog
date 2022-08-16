@@ -1,0 +1,16 @@
+{
+  "hash": "9897a6d1b0b0f9f22b57c20fc20bb1dd",
+  "result": {
+    "markdown": "---\ntitle: \"Line chart: Cigerate consumption\"\ndate: \"2022-08-16\"\ncategories:\n  - baseR\n  - code\n---\n\n\nfrom [basegraphics](https://poisonalien.github.io/basegraphics/baseplots.html)\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# download.file(url = \"https://raw.githubusercontent.com/PoisonAlien/basegraphics/main/data/05-linechart_CigConsumption.csv\", destfile = \"posts/2022-08-16_line-chart-cigerate-consumption/05-linechart_CigConsumption.csv\")\ndata <- read.table(\n    \"05-linechart_CigConsumption.csv\",\n    sep = \",\",\n    header = TRUE\n)\ndata[data == \"null\"] <- NA\ndata <- apply(data, 2, as.numeric)\ndata <- as.data.frame(data)\nrownames(data) <- data$country\n\nmax_count <- max(data[, 2:ncol(data)], na.rm = TRUE)\n\ntitle_main <- \"The rise and fall of cigarette consumption in developed countries\"\ntitle_sub <- \"Sales of cigarettes per adult per day, in selected countries.\\nFigures include manufactured cigarettes, as well as an estimated\\nnumber of hand-rolled cigarettes,per adult (ages 15+) per day.\"\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nlayout(mat = matrix(data = c(1:2), nrow = 2), heights = c(2, 6))\n\npar(mar = c(0, 0, 0, 0))\nplot(NA, xlim = c(0, 1), ylim = c(0, 1), frame.plot = FALSE, axes = FALSE, xlab = NA, ylab = NA)\ntext(x = 0, y = 0.8, labels = title_main, cex = 1, font = 2, adj = 0)\ntext(x = 0, y = 0.35, labels = title_sub, cex = 1, font = 3, adj = 0)\n\npar(mar = c(3, 2, 0, 1))\nplot(NA, xlim = range(data$country), ylim = c(0, max_count), xlab = NA, ylab = NA, frame.plot = FALSE, axes = FALSE)\naxis(side = 2, at = seq(0, 12, 2), labels = seq(0, 12, 2), line = 0, col.axis = \"gray\", cex.axis = 1, las = 2, tick = FALSE)\nabline(h = seq(0, 12, 2), lwd = 1, col = \"gray90\")\n\ntext(x = data$country[1], y = 10, labels = \"Sold cigarettes\\nper day per adult\", cex = 0.7, xpd = TRUE, adj = 0)\n\nfor(i in 2:ncol(data)){\n  points(x = data$country, y = data[,i], pch = \"\", type = \"l\", col = \"#7f8c8d\")  \n}\n\nhghlt = c(\"United.States\", \"Germany\", \"France\")\nhghlt_cols = c(\"#c0392b\", \"#16a085\", \"#2980b9\")\nfor(hghlt_idx in seq_along(hghlt)){\n  hghlt_col_idx = which(colnames(data) == hghlt[hghlt_idx])\n  points(x = data$country, y = data[,hghlt_col_idx], pch = \"\", type = \"l\", col = hghlt_cols[hghlt_idx], lwd = 2)\n}\n\ntext(x = data$country[1], y = c(6:4), labels = hghlt, col = hghlt_cols, adj = 0)\n\naxis(side = 1, at = pretty(data$country), labels = pretty(data$country), line = 0, tick = TRUE, col.axis = \"#7f8c8d\", col = \"#7f8c8d\")\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/plot-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
